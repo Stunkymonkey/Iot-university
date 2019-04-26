@@ -8,14 +8,14 @@
 
 \begin{document}
 %
-\title{Your Project Title}
+\title{Dynamically support daily routines}
 
-\author{Group Name: First Author \and
-Second Author \and
-Third Author}
+\author{Group 13: Jan Leusmann\and
+Felix Bühler \and
+Simon Hagenmayer}
 
 \institute{Service Computing Department, IAAS, University of Stuttgart
-\email{firstname.lastname@uni-stuttgart.de}}
+\email{firstname.lastname@stud.uni-stuttgart.de}}
 %
 \maketitle              % typeset the header of the contribution
 %
@@ -29,62 +29,57 @@ The abstract should briefly summarize the contents of the report in
 %
 %
 \section{Introduction}
-Please note that the first paragraph of a section or subsection is
-not indented. The first paragraph that follows a table, figure,
-equation etc. does not need an indent, either.
+Daily routines are often repeating, but can change depending on some variables, like if you have dates in the morning, leave the house, stay at home, at what time in the evening you come home if you left the house, and the temperature. 
+Supporting these routines automatically enables the human to focus on other important things in his life, speeding up reaping processes, helps saving energy by turning off energy consuming devices when no one is at home, increasing comfort by setting the temperature to a preferred level, giving helpful additional information about the temperature outside.
+As every day can be different, these automatic processes should be dependent on these. 
+Important factors are sleep duration, dates in the morning, if the person is staying at home or leaving for work, the time someone comes home, and more direct factors like if someone is sitting on the chair at the desk.
 
-Subsequent paragraphs, however, are indented.
 
-Table~\ref{tab1} an example of a table.
 
-\begin{table}
-\caption{Table captions should be placed above the
-tables.}\label{tab1}
-\begin{tabular}{|l|l|}
-\hline
-Item & Deadline \\
-\hline
-I1 & D1 \\
-I2 & D2 \\
-I3 & D3 \\
-I4 & D4 \\
-I5 & D5 \\
-\hline
-\end{tabular}
-\end{table}
-
-Fig.~\ref{fig1} gives an example of a figure.
-
-\begin{figure}
-\includegraphics[width=\textwidth]{fig1}
-\caption{A figure caption is always placed below the illustration.
-Please note that short captions are centered, while long ones are
-justified by the macro package automatically.} \label{fig1}
-\end{figure}
-
-For citations of references, we prefer the use of square brackets
-and consecutive numbers. The following bibliography provides
-a sample reference list with entries for journal
-articles~\cite{ref_article1}, a book~\cite{ref_book1}, proceedings without editors~\cite{ref_proc1},
-and a homepage~\cite{ref_url1}. Multiple citations are grouped
-\cite{ref_article1,ref_book1},
-\cite{ref_article1,ref_book1,ref_proc1,ref_url1}.
 
 \section{System architecture}
-Here goes the design of the system architecture.
+We plan to simulate a room through a miniature model.
+The room should contain a bed, a night stand with an alarm clock, a desk with a PC and a chair, a wardrobe and a kitchen area consisting of a coffee machine, a toaster, and a rice cooker.
+The bed has a pressure sensor on it to detect if the subject is sleeping, the alarm clock, simulated through a speaker, should be connected to the coffee machine (represented by a 3D model, also with a speaker in it) and the room lights (LEDs).
+A motion sensor is next to the bed to detect, if the subject got up from bed.
+Also next to the bed 4 LEDs are placed to display the outside weather of the day (cold, normal, hot, rainy). 
+The chair should also have a pressure sensor on it, to detect if someone sits at the desk, to automatically turn on the PC.
+In the kitchen, the toaster and rice cooker also should be represented thorugh 3D models, with distance sensors inside, to detect if a toast or rice is inside. 
+The room and the door are equipped with motion sensors, to detect when the subject leaves it.
+
 
 \section{Requirements specification}
-Here go the requirements both functional and non-functional of the system.
+We divide the day into four stages: morning routine, midday routine, evening routine, and night routine.
 
-\section{Conclusions and Outlook}
-Here goes the conclusions of the project and possible improvements as future work.
+\begin{itemize}
+	\item[Morning routine] The day starts as soon as the alarm clock rings.
+	If the measured sleep duration is below seven hours, we expect the subject to be tired and automatically turn on the coffee machine.
+	If the calender of the subjects contains early dates, the alarm clock volume should be increased to ensure he definitely wakes up just in time.
+	As soon as the subjects stands up the coffee machine should make a coffee and the toaster should turn on, if a toast is inside.  
+	The four weather LEDs should be turned on according to the outside weather. 
+	
+	If the measured time is above seven hours and no early dates are in the subjects' calender, we expect the subject to have time in the morning, and only turn on the coffee machine, but let him decide himself what kind of coffee he wants to make.
+	Also breakfast should not be prepared automatically, as he maybe wants to cook something fancy.
+	
+	\item[Midday routine] If the subjects left for work, the lights should automatically be turned off to save energy. 
+	In case the subjects is staying at home, the pressure sensor on the chair can automatically turn on the PC, and later dates can be displayed through an reminder LED.
+	
+	\item[Evening routine] If the subject left the room for the day, temperature should be controlled and lights should be turned on if the subject is in close proximity to his home. 
+	In case the subjects comes home between 5pm and 8pm the rice cooker should cook rice as soon as the subjects comes home. 
+	If the subject comes home earlier he or she probably wants to cook later in the evening, and in case of after 8pm, he or she probably went out for food.
+	
+	\item[Night routine] The lights should be turned off a few minutes after the subject goes to bed. 
+	The alarm clock should be set to either seven hours of sleep or 90 minutes before the subjects' first date of the day.
+	Also the sleep duration tracker should be started. 
+	
+\end{itemize}
 
 %
 % ---- Bibliography ----
 %
-\bibliographystyle{splncs04}
-\bibliography{mybib}
+%\bibliographystyle{splncs04}
+%\bibliography{mybib}
 
-All links were last followed on April 17, 2019.
+%All links were last followed on April 17, 2019.
 
 \end{document}
