@@ -9,7 +9,8 @@ conn.commit()
 
 
 def upsert(table, key, value):
-    c.execute("INSERT INTO " + table + "(key, value) VALUES('" + key + "', " + value + ") ON CONFLICT(key) DO UPDATE SET value=" + value + ";")
+    c.execute("INSERT INTO " + table + "(key, value) VALUES('" + key + "', " +
+              value + ") ON CONFLICT(key) DO UPDATE SET value=" + value + ";")
     conn.commit()
 
 
