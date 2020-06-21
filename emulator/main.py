@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from tkinter import *
 import mqtt_publish as mqtt
 master = Tk()
@@ -47,9 +49,9 @@ t.grid(row=1, column=1, columnspan=2, sticky=W)
 h = Scale(master, from_=0, to=100, orient=HORIZONTAL, label='humid', command=getHumidity, variable=default_humid)
 h.grid(row=1, column=3)
 
-b0_out = Button(master, text="person out s0", command=decreaseS1)
+b0_out = Button(master, text="person out s0", command=decreaseS0)
 b0_out.grid(row=2, column=1)
-b0_in = Button(master, text="person in s0", command=increaseS1)
+b0_in = Button(master, text="person in s0", command=increaseS0)
 b0_in.grid(row=2, column=3)
 
 section1 = Label(master, text="Section 1")

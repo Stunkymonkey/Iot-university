@@ -9,7 +9,7 @@ def sendValue(val, name):
 
 def sendButtons(name):
     client.publish("iot/sensors/"+name, "1")
-    time.sleep(1)
+    time.sleep(0.1)
     client.publish("iot/sensors/"+name, "0")
 
 

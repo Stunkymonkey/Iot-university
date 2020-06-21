@@ -56,5 +56,5 @@ problem_template = Template("""
 def to_problem_file(heat_index, pers_s1, pers_s2, shelf_s1, shelf_s2):
     output = problem_template.render(heat_index=heat_index, pers_s1=pers_s1,
                                      pers_s2=pers_s2, shelf_s1=shelf_s1, shelf_s2=shelf_s2)
-    with open("problem_supermarket.pddl", "w") as text_file:
+    with open("problem_supermarket_generated.pddl", "w") as text_file:
         text_file.write(output)
