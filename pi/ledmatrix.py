@@ -19,8 +19,8 @@ device = max7219(serial, width=16, height=8)
 #    text(draw, (2,1), "0", fill="white", font=proportional(LCD_FONT))
 #    text(draw, (10,1), "0", fill="white", font=proportional(LCD_FONT))
 
-topic1 = "iot/section1/led"
-topic2 = "iot/section2/led"
+topic1 = "iot/actuators/section1/led"
+topic2 = "iot/actuators/section2/led"
 
 def on_connect(client, userdata, flags, rc):  # The callback for when the client connects to the broker
     print("Connected with result code {0}".format(str(rc)))  # Print result of connection attempt
