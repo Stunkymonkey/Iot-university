@@ -75,7 +75,7 @@
             (is-in ?lr ?s) 
             (is-in ?lg ?s) 
             (is-off ?lr)
-            (> (person-count ?s) 5.0)
+            (> (person-count ?s) 4.0)
         )
         :effect (and 
             (is-on ?lr) 

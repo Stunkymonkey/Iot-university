@@ -43,7 +43,7 @@
         (> (heatindex section1) 27.0) (< (heatindex section1) 32.0)
         (> (heatindex section2) 27.0) (< (heatindex section2) 32.0)
         (> (shelf-items section1) 0.0) (> (shelf-items section2) 0.0)
-        (< (person-count section1) 6.0) (< (person-count section2) 6.0)
+        (< (person-count section1) 5.0) (< (person-count section2) 5.0)
     )
 )
 )
