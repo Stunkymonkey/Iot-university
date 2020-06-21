@@ -25,5 +25,5 @@ def decrement(table, key):
 
 
 def get(table, key):
-    c.execute("SELECT value FROM " + table + ";")
+    c.execute("SELECT value FROM " + table + " WHERE key='" + key + "';")
     return c.fetchone()[0]

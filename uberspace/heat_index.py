@@ -9,9 +9,9 @@ c8 = 0.00072546
 c9 = -0.000003582
 
 
-def calculate(temperature, humidity):
-    HI = c1 + (c2 * temperature) + (c3 * humidity) + (c4 * temperature * humidity) + \
-        (c5 * temperature * temperature) + (c6 * humidity * humidity) + \
-        (c7 * temperature * temperature * humidity) + (c8 * temperature * humidity * humidity) + \
-        (c9 * temperature * temperature * humidity * humidity)
+def calculate(T, R):
+    HI = c1 + (c2 * T) + (c3 * R) + (c4 * T * R) + \
+        (c5 * T ** 2) + (c6 * R ** 2) + \
+        (c7 * T ** 2 * R) + (c8 * T * R ** 2) + \
+        (c9 * T ** 2 * R ** 2)
     return HI
