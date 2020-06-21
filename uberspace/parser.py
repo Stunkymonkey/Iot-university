@@ -4,15 +4,18 @@ def get_states(plan):
     end_position = plan.find("\n     \n\ntime spent:")
     if start_position == -1 or end_position == -1:
         # print("nothing todo")
-        return [False, False, False, False, False]
+        return [False, False, False, False, False, False]
     else:
         steps = plan[start_position + len("step"):end_position]
         lines = steps.split("\n")
         lines = list(map(str.strip, lines))
         lines = [e[3:] for e in lines]
+
         present_values = set()
         for line in lines:
             present_values.add(line)
+
+        ventilator_on = refill_shelf_1 = refill_shelf_2 = block_section_0 = block_section_1 = block_section_2 = False
         # mapping of steps to states
         if "VENTILATOR-ON VENTILATOR1 SECTION1" in present_values or "VENTILATOR-ON VENTILATOR1 SECTION2" in present_values:
             ventilator_on = True

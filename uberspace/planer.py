@@ -13,6 +13,14 @@ person_counter_0 = "iot/sensors/section0/counter"
 person_counter_1 = "iot/sensors/section1/counter"
 person_counter_2 = "iot/sensors/section2/counter"
 
+actuator_states = list()
+actuator_states.append("iot/actuators/section0/ventilator")
+actuator_states.append("iot/actuators/section1/refill_shelf")
+actuator_states.append("iot/actuators/section2/refill_shelf")
+actuator_states.append("iot/actuators/section0/gate")
+actuator_states.append("iot/actuators/section1/gate")
+actuator_states.append("iot/actuators/section2/gate")
+
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to MQTT-Server")
@@ -42,12 +50,22 @@ def save_states(topic, payload):
         database.upsert("sensor", topic, payload)
 
 
+def get_old_actuator_states():
+    old_ventilator_on = database.get("actuator", "iot/actuators/section0/ventilator")
+    old_refill_shelf_1 = database.get("actuator", "iot/actuators/section1/refill_shelf")
+    old_refill_shelf_2 = database.get("actuator", "iot/actuators/section2/refill_shelf")
+    old_block_0 = database.get("actuator", "iot/actuators/section0/gate")
+    old_block_1 = database.get("actuator", "iot/actuators/section1/gate")
+    old_block_2 = database.get("actuator", "iot/actuators/section2/gate")
+    return [old_ventilator_on, old_refill_shelf_1, old_refill_shelf_2, old_block_0, old_block_1, old_block_2]
+
+
 def on_message(client, userdata, msg):
     topic = msg.topic
     payload = msg.payload.decode()
     # print(topic, payload)
 
-    # save new states
+    # save new states from this message
     save_states(topic, payload)
 
     # get all values from database
@@ -70,12 +88,15 @@ def on_message(client, userdata, msg):
     new_states = parser.get_states(plan)
     print(new_states)
 
+    # [ventilator_on, refill_shelf_1, refill_shelf_2, block_section_0, block_section_1, block_section_2]
     # check what should get updated with database
-    # send new updates like this (maybe from different file)
-    topic = "iot/actuators/section1/led"
-    mqtt_publish.sendValue(database.get("sensor", topic), topic)
-    topic = "iot/actuators/section2/led"
-    mqtt_publish.sendValue(database.get("sensor", topic), topic)
+    old_states = get_old_actuator_states()
+
+    for (tmp, new, old) in zip(actuator_states, new_states, old_states):
+        if new != old:
+            # print("new_value")
+            database.upsert("actuator", tmp, int(new))
+            mqtt_publish.sendValue(new, tmp)
 
 
 client = mqtt.Client()
