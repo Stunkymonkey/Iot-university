@@ -51,12 +51,12 @@ def save_states(topic, payload):
 
 
 def get_old_actuator_states():
-    old_ventilator_on = database.get("actuator", "iot/actuators/section0/ventilator")
-    old_refill_shelf_1 = database.get("actuator", "iot/actuators/section1/refill_shelf")
-    old_refill_shelf_2 = database.get("actuator", "iot/actuators/section2/refill_shelf")
-    old_block_0 = database.get("actuator", "iot/actuators/section0/gate")
-    old_block_1 = database.get("actuator", "iot/actuators/section1/gate")
-    old_block_2 = database.get("actuator", "iot/actuators/section2/gate")
+    old_ventilator_on = database.get("actuator", actuator_states[0])
+    old_refill_shelf_1 = database.get("actuator", actuator_states[1])
+    old_refill_shelf_2 = database.get("actuator", actuator_states[2])
+    old_block_0 = database.get("actuator", actuator_states[3])
+    old_block_1 = database.get("actuator", actuator_states[4])
+    old_block_2 = database.get("actuator", actuator_states[5])
     return [old_ventilator_on, old_refill_shelf_1, old_refill_shelf_2, old_block_0, old_block_1, old_block_2]
 
 
