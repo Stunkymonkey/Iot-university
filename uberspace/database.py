@@ -9,22 +9,15 @@ conn.commit()
 
 
 def upsert(table, key, value):
-    # "CREATE TABLE vocabulary(key TEXT PRIMARY KEY, count INT DEFAULT 1);"
-    statement = "INSERT INTO vocabulary(key) VALUES('jovial') ON CONFLICT(key) DO UPDATE SET value=value+1;"
-    statement = "INSERT INTO " + table + \
-        "(key) VALUES('" + key + "') ON CONFLICT(key) DO UPDATE SET value=" + value + ";"
-    print(statement)
+    c.execute("INSERT INTO " + table + "(key) VALUES('" + key + "') ON CONFLICT(key) DO UPDATE SET value=" + value + ";")
+    conn.commit()
 
 
 def increment(table, key):
-    # "CREATE TABLE vocabulary(key TEXT PRIMARY KEY, count INT DEFAULT 1);"
-    statement = "INSERT INTO vocabulary(key) VALUES('jovial') ON CONFLICT(key) DO UPDATE SET value=value+1;"
-    statement = "INSERT INTO " + table + "(key) VALUES('" + key + "') ON CONFLICT(key) DO UPDATE SET value=value+1;"
-    print(statement)
+    c.execute("INSERT INTO " + table + "(key) VALUES('" + key + "') ON CONFLICT(key) DO UPDATE SET value=value+1;")
+    conn.commit()
 
 
 def decrement(table, key):
-    # "CREATE TABLE vocabulary(key TEXT PRIMARY KEY, count INT DEFAULT 1);"
-    statement = "INSERT INTO vocabulary(key) VALUES('jovial') ON CONFLICT(key) DO UPDATE SET value=value+1;"
-    statement = "INSERT INTO " + table + "(key) VALUES('" + key + "') ON CONFLICT(key) DO UPDATE SET value=value-1;"
-    print(statement)
+    c.execute("INSERT INTO " + table + "(key) VALUES('" + key + "') ON CONFLICT(key) DO UPDATE SET value=value-1;")
+    conn.commit()
