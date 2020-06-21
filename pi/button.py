@@ -25,7 +25,7 @@ else:
     section = int(sys.argv[1])
     property = sys.argv[2]
     BUTTON_GPIO = getGPIO(section)
-name = 'section' + str(section) + '/button/' + property
+name = 'sensors/section' + str(section) + '/button/' + property
 
 def signal_handler(sig, frame):
     GPIO.cleanup()
