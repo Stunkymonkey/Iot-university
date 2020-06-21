@@ -1,3 +1,6 @@
+from jinja2 import Template
+
+problem_template = Template("""
 (define (problem supermarket_problem) (:domain domain_supermarket)
 
 (:objects
@@ -28,14 +31,14 @@
 
     (is-off ventilator1)
 
-    (= (person-count section1) 2.0)
-    (= (person-count section2) 6.0)
+    (= (person-count section1) {{ pers_s1 }})
+    (= (person-count section2) {{ pers_s2 }})
 
-    (= (heatindex section1) 28.0)
-    (= (heatindex section2) 33.0)
+    (= (heatindex section1) {{ heat_index }})
+    (= (heatindex section2) {{ heat_index }})
 
-    (= (shelf-items section1) 0.0)
-    (= (shelf-items section2) 2.0)
+    (= (shelf-items section1) {{ shelf_s1 }})
+    (= (shelf-items section2) {{ shelf_s2 }})
 )
 
 (:goal
@@ -47,3 +50,11 @@
     )
 )
 )
+""")
+
+
+def to_problem_file(heat_index, pers_s1, pers_s2, shelf_s1, shelf_s2):
+    output = problem_template.render(heat_index=heat_index, pers_s1=pers_s1,
+                                     pers_s2=pers_s2, shelf_s1=shelf_s1, shelf_s2=shelf_s2)
+    with open("problem_supermarket_generated.pddl", "w") as text_file:
+        text_file.write(output)

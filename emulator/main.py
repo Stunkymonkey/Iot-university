@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from tkinter import *
 import mqtt_publish as mqtt
 out_color = '#c62828'
