@@ -39,7 +39,6 @@
             (is-on ?v) 
             (assign (heatindex ?s) 28.0)
         )
-    
     )
     
     ; if ventilator is on and heatindex is low and only a few people in section
@@ -81,7 +80,6 @@
             (is-on ?lr) 
             (is-off ?lg)
             (decrease (person-count ?s) 1) 
-
         )
     )
 
@@ -100,6 +98,5 @@
             (increase (person-count ?s) 1)
         )
     )
-    
 )
 
