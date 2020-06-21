@@ -7,6 +7,4 @@ def getStates():
     return states
 def setStates(key, value):
     states.update({key : value})
-    getLed()
-    print(states)
 
