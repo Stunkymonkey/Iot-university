@@ -37,9 +37,9 @@ class CrowsEmulator:
         self.h = Scale(master, from_=0, to=100, orient=HORIZONTAL, label='humid', command=self.getHumidity, variable=self.default_humid)
         self.h.grid(row=1, column=3)
 
-        self.b0_out = Button(master, text="person out s0", command=self.decreaseS1, bg=out_color)
+        self.b0_out = Button(master, text="person out s0", command=self.decreaseS0, bg=out_color)
         self.b0_out.grid(row=2, column=1)
-        self.b0_in = Button(master, text="person in s0", command=self.increaseS1, bg=in_color)
+        self.b0_in = Button(master, text="person in s0", command=self.increaseS0, bg=in_color)
         self.b0_in.grid(row=2, column=3)
 
         self.section1 = Label(master, text="Section 1")
