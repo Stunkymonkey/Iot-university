@@ -3,8 +3,15 @@ def get_states(plan):
     start_position = plan.find("step")
     end_position = plan.find("\n     \n\ntime spent:")
     if start_position == -1 or end_position == -1:
-        # print("nothing todo")
-        return [False, False, False, False, False, False]
+        # print("no steps provided")
+        return {
+            "iot/actuators/section0/ventilator": False,
+            "iot/actuators/section1/refill_shelf": False,
+            "iot/actuators/section2/refill_shelf": False,
+            "iot/actuators/section0/gate": False,
+            "iot/actuators/section1/gate": False,
+            "iot/actuators/section2/gate": False
+        }
     else:
         steps = plan[start_position + len("step"):end_position]
         lines = steps.split("\n")
