@@ -47,7 +47,7 @@ def on_message(client, userdata, msg):
     payload = msg.payload.decode()
     # print(topic, payload)
 
-    # save new states
+    # save new states from this message
     save_states(topic, payload)
 
     # get all values from database
@@ -70,12 +70,13 @@ def on_message(client, userdata, msg):
     new_states = parser.get_states(plan)
     print(new_states)
 
-    # check what should get updated with database
-    # send new updates like this (maybe from different file)
-    topic = "iot/actuators/section1/led"
-    mqtt_publish.sendValue(database.get("sensor", topic), topic)
-    topic = "iot/actuators/section2/led"
-    mqtt_publish.sendValue(database.get("sensor", topic), topic)
+    for topic, new in new_states:
+        # check what should get updated with database
+        old = database.get("actuator", topic)
+        if new != old:
+            # print("new_value")
+            database.upsert("actuator", topic, int(new))
+            mqtt_publish.sendValue(new, topic)
 
 
 client = mqtt.Client()

@@ -6,7 +6,7 @@ problem_template = Template("""
 (:objects
     section0 section1 section2 - section
     ventilator1 - ventilator
-    led-green-s0  led-green-s1 led-green-s2 - led-green
+    led-green-s0 led-green-s1 led-green-s2 - led-green
     led-red-s0 led-red-s1 led-red-s2 - led-red
 )
 
