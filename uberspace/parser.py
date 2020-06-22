@@ -15,20 +15,14 @@ def get_states(plan):
         for line in lines:
             present_values.add(line)
 
-        ventilator_on = refill_shelf_1 = refill_shelf_2 = block_section_0 = block_section_1 = block_section_2 = False
         # mapping of steps to states
-        if "VENTILATOR-ON VENTILATOR1 SECTION1" in present_values or "VENTILATOR-ON VENTILATOR1 SECTION2" in present_values:
-            ventilator_on = True
-        if "REFILL-SHELF SECTION1" in present_values:
-            refill_shelf_1 = True
-        if "REFILL-SHELF SECTION2" in present_values:
-            refill_shelf_2 = True
-        if "LED-RED-ON SECTION0 LED-GREEN-S2 LED-RED-S2" in present_values:
-            block_section_0 = True
-        if "LED-RED-ON SECTION1 LED-GREEN-S0 LED-RED-S2" in present_values:
-            block_section_1 = True
-        if "LED-RED-ON SECTION2 LED-GREEN-S2 LED-RED-S2" in present_values:
-            block_section_2 = True
-        # print(present_values)
-
-        return [ventilator_on, refill_shelf_1, refill_shelf_2, block_section_0, block_section_1, block_section_2]
+        result = dict()
+        # if one ventilator is on turn on the ventilator
+        result["iot/actuators/section0/ventilator"] = "VENTILATOR-ON VENTILATOR1 SECTION1" in present_values or \
+                                                      "VENTILATOR-ON VENTILATOR1 SECTION2" in present_values
+        result["iot/actuators/section1/refill_shelf"] = "REFILL-SHELF SECTION1" in present_values
+        result["iot/actuators/section2/refill_shelf"] = "REFILL-SHELF SECTION2" in present_values
+        result["iot/actuators/section0/gate"] = "LED-RED-ON SECTION0 LED-GREEN-S2 LED-RED-S2" in present_values
+        result["iot/actuators/section1/gate"] = "LED-RED-ON SECTION1 LED-GREEN-S0 LED-RED-S2" in present_values
+        result["iot/actuators/section2/gate"] = "LED-RED-ON SECTION2 LED-GREEN-S2 LED-RED-S2" in present_values
+        return result
