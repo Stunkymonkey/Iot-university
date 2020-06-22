@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App.vue'
+import Crows from './components/Crows.vue'
 import vuetify from './plugins/vuetify';
 import VueMqtt from 'vue-mqtt';
 
@@ -9,5 +9,5 @@ Vue.config.productionTip = false
 
 new Vue({
   vuetify,
-  render: h => h(App)
+  render: h => h(Crows)
 }).$mount('#app')
