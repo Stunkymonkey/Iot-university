@@ -70,11 +70,10 @@ def on_message(client, userdata, msg):
     new_states = parser.get_states(plan)
     print(new_states)
 
-    for topic, new in new_states:
+    for (topic, new) in new_states.items():
         # check what should get updated with database
         old = database.get("actuator", topic)
         if new != old:
-            # print("new_value")
             database.upsert("actuator", topic, int(new))
             mqtt_publish.sendValue(new, topic)
 
