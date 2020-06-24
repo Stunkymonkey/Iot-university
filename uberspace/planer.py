@@ -61,7 +61,7 @@ def on_message(client, userdata, msg):
     # get all values from database
     temperature = database.get("sensor", "iot/sensors/section0/temperature")
     humidity = database.get("sensor", "iot/sensors/section0/humidity")
-    HI = heat_index.calculate(temperature, humidity)
+    HI = heat_index.calculate(float(temperature), float(humidity))
     pers_s1 = database.get("sensor", person_counter_1)
     pers_s2 = database.get("sensor", person_counter_2)
     shelf_s1 = database.get("sensor", "iot/sensors/section1/shelf")
@@ -79,10 +79,22 @@ def on_message(client, userdata, msg):
     print(new_states)
 
     for (topic, new) in new_states.items():
+        # get value for matrix leds
+        if topic.startswith("iot/actuators/section") and topic.endswith("/gate"):
+            section_id = topic.replace("iot/actuators/section", "").replace("/gate", "")
+            value = database.get("sensor", "iot/sensors/section" + section_id + "/counter")
+            if new:
+                value = "-"
+            new = value
+
         # check what should get updated with database
         old = database.get("actuator", topic)
+        # make sure both datatypes are the same
+        old = str(old)
+        new = str(new)
+
         if new != old:
-            database.upsert("actuator", topic, int(new))
+            database.upsert("actuator", topic, new)
             mqtt_publish.sendValue(new, topic)
 
 
