@@ -19,6 +19,12 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("iot/sensors/#")
 
 
+def calculate_items_in_shelf(payload):
+    # the minimal distance for the sensor is 2cm
+    # returns the amount of items
+    return int((float(payload) - 2) / 3)
+
+
 def save_states(topic, payload):
     if topic == "iot/sensors/section0/button/in":
         if payload == "1":
@@ -39,6 +45,8 @@ def save_states(topic, payload):
         if payload == "1":
             database.decrement("sensor", person_counter_2)
     else:
+        if topic.endswith("/shelf"):
+            payload = calculate_items_in_shelf(payload)
         database.upsert("sensor", topic, payload)
 
 
