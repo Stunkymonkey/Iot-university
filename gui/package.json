@@ -10,7 +10,9 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
+    "vue-awesome": "^4.0.2",
     "vue-mqtt": "^2.0.3",
+    "vue-router": "^3.3.4",
     "vuetify": "^2.2.11"
   },
   "devDependencies": {
