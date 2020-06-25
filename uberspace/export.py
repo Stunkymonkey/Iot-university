@@ -31,6 +31,7 @@ problem_template = Template("""
 
     (is-off ventilator1)
 
+    (= (person-count section0) {{ pers_s0 }})
     (= (person-count section1) {{ pers_s1 }})
     (= (person-count section2) {{ pers_s2 }})
 
@@ -46,15 +47,15 @@ problem_template = Template("""
         (> (heatindex section1) 27.0) (< (heatindex section1) 32.0)
         (> (heatindex section2) 27.0) (< (heatindex section2) 32.0)
         (> (shelf-items section1) 0.0) (> (shelf-items section2) 0.0)
-        (< (person-count section1) 5.0) (< (person-count section2) 5.0)
+        (< (person-count section0) 5.0) (< (person-count section1) 5.0) (< (person-count section2) 5.0)
     )
 )
 )
 """)
 
 
-def to_problem_file(heat_index, pers_s1, pers_s2, shelf_s1, shelf_s2):
-    output = problem_template.render(heat_index=heat_index, pers_s1=pers_s1,
+def to_problem_file(heat_index, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2):
+    output = problem_template.render(heat_index=heat_index, pers_s0=pers_s0, pers_s1=pers_s1,
                                      pers_s2=pers_s2, shelf_s1=shelf_s1, shelf_s2=shelf_s2)
     with open("problem_supermarket_generated.pddl", "w") as text_file:
         text_file.write(output)

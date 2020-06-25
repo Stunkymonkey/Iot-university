@@ -29,7 +29,7 @@ def get_states(plan):
                                                       "VENTILATOR-ON VENTILATOR1 SECTION2" in present_values
         result["iot/actuators/section1/refill_shelf"] = "REFILL-SHELF SECTION1" in present_values
         result["iot/actuators/section2/refill_shelf"] = "REFILL-SHELF SECTION2" in present_values
-        result["iot/actuators/section0/gate"] = "LED-RED-ON SECTION0 LED-GREEN-S2 LED-RED-S2" in present_values
-        result["iot/actuators/section1/gate"] = "LED-RED-ON SECTION1 LED-GREEN-S0 LED-RED-S2" in present_values
+        result["iot/actuators/section0/gate"] = "LED-RED-ON SECTION0 LED-GREEN-S0 LED-RED-S0" in present_values
+        result["iot/actuators/section1/gate"] = "LED-RED-ON SECTION1 LED-GREEN-S1 LED-RED-S1" in present_values
         result["iot/actuators/section2/gate"] = "LED-RED-ON SECTION2 LED-GREEN-S2 LED-RED-S2" in present_values
         return result
