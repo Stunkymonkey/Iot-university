@@ -12,12 +12,12 @@ problem_template = Template("""
 
 ; init everything thats true, otherwise it is false by default
 (:init
-    (is-in led-green-s0 section1)
+    (is-in led-green-s0 section0)
     (is-in led-green-s1 section1)
     (is-in led-green-s2 section2)
 
-    (is-in led-red-s2 section0)
-    (is-in led-red-s2 section1)
+    (is-in led-red-s0 section0)
+    (is-in led-red-s1 section1)
     (is-in led-red-s2 section2)
 
     (is-on led-green-s0)

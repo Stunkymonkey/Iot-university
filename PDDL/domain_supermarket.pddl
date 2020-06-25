@@ -57,13 +57,17 @@
     
     ; if not too many people in section and shelf is empty refill it 
     (:action refill-shelf
-        :parameters (?s - section)
+        :parameters (?s - section ?lg - led-green ?lr - led-red)
         :precondition (and 
             (= (shelf-items ?s) 0.0) 
             (< (person-count ?s) 3.0)
+            (is-in ?lr ?s)
+            (is-in ?lg ?s)
         )
         :effect (and 
             (assign (shelf-items ?s) 6.0)
+            (is-off ?lg)
+            (is-on ?lr)
         )
     )
 
@@ -91,6 +95,7 @@
             (is-in ?lr ?s)
             (is-off ?lg)
             (< (person-count ?s) 5.0)
+            (> (shelf-items ?s) 0.0)
         )
         :effect (and 
             (is-on ?lg)
