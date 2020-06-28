@@ -22,7 +22,7 @@ def on_connect(client, userdata, flags, rc):
 def calculate_items_in_shelf(payload):
     # the minimal distance for the sensor is 2cm
     # returns the amount of items
-    return int((float(payload) - 2) / 3)
+    return 5 - int((float(payload) - 2) / 3)
 
 
 def save_states(topic, payload):
