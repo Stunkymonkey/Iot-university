@@ -61,7 +61,10 @@ def on_message(client, userdata, msg):
     # get all values from database
     temperature = database.get("sensor", "iot/sensors/section0/temperature")
     humidity = database.get("sensor", "iot/sensors/section0/humidity")
-    HI = heat_index.calculate(float(temperature), float(humidity))
+    if int(temperature) > 27:
+        HI = heat_index.calculate(float(temperature), float(humidity))
+    else:
+        HI = 0.0
     pers_s0 = database.get("sensor", person_counter_0)
     pers_s1 = database.get("sensor", person_counter_1)
     pers_s2 = database.get("sensor", person_counter_2)
