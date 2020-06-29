@@ -37,7 +37,7 @@
         )
         :effect (and
             (is-on ?v)
-            (assign (heatindex ?s) 26.0)
+            (assign (heatindex ?s) 0.0)
         )
     )
 
