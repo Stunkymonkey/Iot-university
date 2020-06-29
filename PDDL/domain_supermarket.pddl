@@ -77,7 +77,7 @@
         :precondition (and
             (is-in ?lr ?s)
             (is-in ?lg ?s)
-            (> (person-count ?s) 3.0)
+            (> (person-count ?s) 2.0)
             (= (shelf-items ?s) 0.0)
         )
         :effect (and
