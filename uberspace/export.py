@@ -29,14 +29,14 @@ problem_template = Template("""
     (is-on led-green-s2)
     (is-off led-red-s2)
 
+    (is-in ventilator1 section0)
     (is-off ventilator1)
 
     (= (person-count section0) {{ pers_s0 }})
     (= (person-count section1) {{ pers_s1 }})
     (= (person-count section2) {{ pers_s2 }})
 
-    (= (heatindex section1) {{ heat_index }})
-    (= (heatindex section2) {{ heat_index }})
+    (= (heatindex section0) {{ heat_index }})
 
     (= (shelf-items section1) {{ shelf_s1 }})
     (= (shelf-items section2) {{ shelf_s2 }})
@@ -44,8 +44,7 @@ problem_template = Template("""
 
 (:goal
     (and
-        (> (heatindex section1) 27.0) (< (heatindex section1) 32.0)
-        (> (heatindex section2) 27.0) (< (heatindex section2) 32.0)
+        (> (heatindex section0) 27.0) (< (heatindex section0) 32.0)
         (> (shelf-items section1) 0.0) (> (shelf-items section2) 0.0)
         (< (person-count section0) 5.0) (< (person-count section1) 5.0) (< (person-count section2) 5.0)
     )

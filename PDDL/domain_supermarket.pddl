@@ -31,12 +31,13 @@
     ; --> turn on ventilator
     (:action ventilator-on
         :parameters (?v - ventilator ?s - section)
-        :precondition (and 
-            (is-off ?v) 
-            (> (person-count ?s) 0.0)
+        :precondition (and
+            (is-off ?v)
+            (is-in ?v ?s)
+            (exists (?s1 - section) (> (person-count ?s1) 0.0))
         )
-        :effect (and 
-            (is-on ?v) 
+        :effect (and
+            (is-on ?v)
             (assign (heatindex ?s) 28.0)
         )
     )
@@ -45,12 +46,12 @@
     ; --> turn ventilator off
     (:action ventilator-off
         :parameters (?v - ventilator ?s - section)
-        :precondition (and   
-            (is-on ?v) 
-            (< (person-count ?s) 5.0)
+        :precondition (and
+            (is-in ?v ?s)
+            (forall (?s1 - section) (< (person-count ?s1) 5.0))
         )
-        :effect (and 
-            (is-off ?v) 
+        :effect (and
+            (is-off ?v)
             (assign (heatindex ?s) 28.0)
         )
     )
@@ -58,8 +59,8 @@
     ; if not too many people in section and shelf is empty refill it 
     (:action refill-shelf
         :parameters (?s - section ?lg - led-green ?lr - led-red)
-        :precondition (and 
-            (= (shelf-items ?s) 0.0) 
+        :precondition (and
+            (= (shelf-items ?s) 0.0)
             (< (person-count ?s) 3.0)
             (is-in ?lr ?s)
             (is-in ?lg ?s)
@@ -72,7 +73,7 @@
     )
 
     ; change led light to red --> do not enter
-	(:action led-red-on-2
+    (:action led-red-on-2
         :parameters (?s - section ?lg - led-green ?lr - led-red)
         :precondition (and
             (is-in ?lr ?s)
