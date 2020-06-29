@@ -72,18 +72,33 @@
     )
 
     ; change led light to red --> do not enter
+	(:action led-red-on-2
+        :parameters (?s - section ?lg - led-green ?lr - led-red)
+        :precondition (and
+            (is-in ?lr ?s)
+            (is-in ?lg ?s)
+            (> (person-count ?s) 3.0)
+            (= (shelf-items ?s) 0.0)
+        )
+        :effect (and
+            (is-on ?lr)
+            (is-off ?lg)
+            (assign (person-count ?s) 1)
+        )
+    )
+
     (:action led-red-on
         :parameters (?s - section ?lg - led-green ?lr - led-red)
-        :precondition (and 
-            (is-in ?lr ?s) 
-            (is-in ?lg ?s) 
+        :precondition (and
+            (is-in ?lr ?s)
+            (is-in ?lg ?s)
             (is-off ?lr)
             (> (person-count ?s) 4.0)
         )
-        :effect (and 
-            (is-on ?lr) 
+        :effect (and
+            (is-on ?lr)
             (is-off ?lg)
-            (decrease (person-count ?s) 1) 
+            (assign (person-count ?s) 1)
         )
     )
 
