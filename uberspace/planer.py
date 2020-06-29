@@ -22,7 +22,14 @@ def on_connect(client, userdata, flags, rc):
 def calculate_items_in_shelf(payload):
     # the minimal distance for the sensor is 2cm
     # returns the amount of items
-    return 5 - int((float(payload) - 2) / 3)
+    # from 3 to 16 cm with 4 items
+    absoulte_zero = float(payload) - 3
+    percentage = absoulte_zero / 16
+    items = 4.0 - (percentage * 4)
+    if items < 0:
+        return 0
+    else:
+        return int(items)
 
 
 def save_states(topic, payload):
@@ -65,11 +72,12 @@ def on_message(client, userdata, msg):
         HI = heat_index.calculate(float(temperature), float(humidity))
     else:
         HI = 0.0
-    pers_s0 = database.get("sensor", person_counter_0)
-    pers_s1 = database.get("sensor", person_counter_1)
-    pers_s2 = database.get("sensor", person_counter_2)
-    shelf_s1 = database.get("sensor", "iot/sensors/section1/shelf")
-    shelf_s2 = database.get("sensor", "iot/sensors/section2/shelf")
+    # print(HI)
+    pers_s0 = float(database.get("sensor", person_counter_0))
+    pers_s1 = float(database.get("sensor", person_counter_1))
+    pers_s2 = float(database.get("sensor", person_counter_2))
+    shelf_s1 = float(database.get("sensor", "iot/sensors/section1/shelf"))
+    shelf_s2 = float(database.get("sensor", "iot/sensors/section2/shelf"))
 
     # save all value to file
     export.to_problem_file(HI, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2)
