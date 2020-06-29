@@ -39,7 +39,7 @@ while True:
     distance1= round(distance1, 2)
     print ("Distance1:",distance1, "cm")
 
-    client.publish("iot/shelf/section1", distance1)
+    client.publish("iot/sensors/section1/shelf", distance1)
 
     time.sleep(1)
 

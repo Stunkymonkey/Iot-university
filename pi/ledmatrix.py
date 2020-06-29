@@ -45,8 +45,6 @@ def draw():
         text(draw, (2,1), str(states[1]), fill="white", font=proportional(LCD_FONT))
 
 
-
-
 client = mqtt.Client()
 client.on_connect = on_connect
 client.message_callback_add(topic1, on_message_n1)
@@ -57,5 +55,4 @@ client.connect("boethin.uberspace.de", 46980, 60)
 client.loop_forever()
 
 # virtual = viewport(device, width=200, height=100)
-
 
