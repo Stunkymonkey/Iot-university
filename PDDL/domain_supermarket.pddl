@@ -22,6 +22,7 @@
     
     (:functions 
         (person-count ?s - section)
+        (temperature ?s - section)
         (heatindex ?s - section)
         (shelf-items ?s - section)
     )
@@ -32,6 +33,7 @@
         :precondition (and
             (is-off ?v)
             (is-in ?v ?s)
+            (> (temperature ?s) 25.0)
             (> (heatindex ?s) 27.0)
             (exists (?s1 - section) (> (person-count ?s1) 0.0))
         )
@@ -61,7 +63,10 @@
                 (= (shelf-items ?s) 0.0)
             ) 
             (forall (?s1 - section) (> (person-count ?s1) 4.0))
-            (> (heatindex ?s) 31.0)
+            (and 
+                (> (temperature ?s) 25.0)
+                (> (heatindex ?s) 31.0)
+            )
          )
         :effect (and
             (assign (person-count ?s) 1.0)
