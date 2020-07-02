@@ -21,7 +21,10 @@
               <v-card flat class="mx-auto myrow1" fluid outlined>
                 <v-list-item>
                   <v-list-item-content>
-                    <div class="overline mb-1">Main Section</div>
+                    <div class="overline mb-1">
+                      Main Section
+                      <span class="hidden-md-and-up">Sensors</span>
+                    </div>
                     <v-subheader class="mt-0 mb-0 pt-0 pb-0">Temperature</v-subheader>
                     <v-card-text class="mt-0 mb-0 pt-0 pb-0">
                       <v-slider
@@ -29,7 +32,7 @@
                         height="2"
                         color="accent"
                         min="0"
-                        max="30"
+                        max="40"
                         class="temperature"
                         v-model="section0.temperature"
                       >
@@ -74,15 +77,10 @@
                     </div>
                     <v-row class="wrapper">
                       <v-col cols="4" class="mx-auto">
-                        <v-row>Gate</v-row>
+                        <v-row>Gate: {{section0.gate}}</v-row>
                         <v-row>
-                          <v-icon
-                            class="mysuc"
-                            name="check"
-                            scale="3"
-                            v-if="section0.gate === 'True'"
-                          ></v-icon>
-                          <v-icon class="alert" name="ban" scale="3" v-else></v-icon>
+                          <v-icon class="alert" name="ban" scale="3" v-if="section0.gate === '-'"></v-icon>
+                          <v-icon class="mysuc" name="check" scale="3" v-else></v-icon>
                         </v-row>
                       </v-col>
                       <v-col cols="4" class="mx-auto">
@@ -113,13 +111,13 @@
                       Section 1
                       <span class="hidden-md-and-up">Sensors</span>
                     </div>
-                    <v-subheader class="mt-0 mb-0 pt-0 pb-0">Shelf</v-subheader>
+                    <v-subheader class="mt-0 mb-0 pt-0 pb-0">Shelf (in cm)</v-subheader>
                     <v-card-text class="mt-0 mb-0 pt-0 pb-0">
                       <v-slider
                         dense
                         height="2"
                         color="accent"
-                        step="0.5"
+                        step="3.5"
                         min="2"
                         max="20"
                         v-model="section1.shelf"
@@ -149,64 +147,55 @@
                     </div>
                     <v-row class="wrapper">
                       <v-col cols="4" class="mx-auto">
-                        <v-row>LED: {{section1.led}}</v-row>
+                        <v-row>Person Counter</v-row>
                         <v-row>
                           <v-img
                             v-if="section1.led === '0'"
                             contain
                             max-width="62px"
-                            src="@/images/LED_off.png"
+                            src="@/images/LED_0.png"
                           ></v-img>
                           <v-img
                             v-else-if="section1.led === '1'"
                             contain
                             max-width="62px"
-                            src="@/images/LED_on.png"
+                            src="@/images/LED_1.png"
                           ></v-img>
                           <v-img
                             v-else-if="section1.led === '2'"
                             contain
                             max-width="62px"
-                            src="@/images/LED_on.png"
+                            src="@/images/LED_2.png"
                           ></v-img>
                           <v-img
                             v-else-if="section1.led === '3'"
                             contain
                             max-width="62px"
-                            src="@/images/LED_on.png"
+                            src="@/images/LED_3.png"
                           ></v-img>
                           <v-img
                             v-else-if="section1.led === '4'"
                             contain
                             max-width="62px"
-                            src="@/images/LED_on.png"
+                            src="@/images/LED_4.png"
                           ></v-img>
                           <v-img
-                            v-else-if="section1.led === '5'"
+                            v-else-if="section1.led === '-'"
                             contain
                             max-width="62px"
-                            src="@/images/LED_on.png"
+                            src="@/images/LED_-.png"
                           ></v-img>
-                          <v-img v-else contain max-width="62px" src="@/images/LED_on.png"></v-img>
+                          <v-img v-else contain max-width="62px" src="@/images/LED_off.png"></v-img>
                         </v-row>
                       </v-col>
                       <v-col cols="4" class="mx-auto">
-                        <v-row>Shelf: {{section1.refill_shelf}}</v-row>
+                        <v-row>Refill Shelf</v-row>
                         <v-row>
-                          <v-img
-                            v-if="section1.refill_shelf === 'False'"
-                            contain
-                            max-width="62px"
-                            src="@/images/fullshelf.png"
-                          ></v-img>
+                          <div v-if="section1.refill_shelf === 'True'">
+                            <v-icon class="notificationicon" name="bell" scale="2"></v-icon>
+                          </div>
                           <div v-else>
-                            <v-img
-                              style="vertical-align: middle; display: inline-block; margin-right: 10px;"
-                              contain
-                              max-width="62px"
-                              src="@/images/emptyshelf.png"
-                            ></v-img>
-                            <v-icon name="bell" scale="2"></v-icon>
+                            <v-icon class="inactive" name="bell" scale="2"></v-icon>
                           </div>
                         </v-row>
                       </v-col>
@@ -225,13 +214,13 @@
                       Section 2
                       <span class="hidden-md-and-up">Sensors</span>
                     </div>
-                    <v-subheader class="mt-0 mb-0 pt-0 pb-0">Shelf</v-subheader>
+                    <v-subheader class="mt-0 mb-0 pt-0 pb-0">Shelf (in cm)</v-subheader>
                     <v-card-text class="mt-0 mb-0 pt-0 pb-0">
                       <v-slider
                         dense
                         height="2"
                         color="accent"
-                        step="0.5"
+                        step="3.5"
                         min="2"
                         max="20"
                         v-model="section2.shelf"
@@ -261,64 +250,55 @@
                     </div>
                     <v-row class="wrapper">
                       <v-col cols="4" class="mx-auto">
-                        <v-row>LED: {{section2.led}}</v-row>
+                        <v-row>Person Counter</v-row>
                         <v-row>
                           <v-img
                             v-if="section2.led === '0'"
                             contain
                             max-width="62px"
-                            src="@/images/LED_off.png"
+                            src="@/images/LED_0.png"
                           ></v-img>
                           <v-img
                             v-else-if="section2.led === '1'"
                             contain
                             max-width="62px"
-                            src="@/images/LED_on.png"
+                            src="@/images/LED_1.png"
                           ></v-img>
                           <v-img
                             v-else-if="section2.led === '2'"
                             contain
                             max-width="62px"
-                            src="@/images/LED_on.png"
+                            src="@/images/LED_2.png"
                           ></v-img>
                           <v-img
                             v-else-if="section2.led === '3'"
                             contain
                             max-width="62px"
-                            src="@/images/LED_on.png"
+                            src="@/images/LED_3.png"
                           ></v-img>
                           <v-img
                             v-else-if="section2.led === '4'"
                             contain
                             max-width="62px"
-                            src="@/images/LED_on.png"
+                            src="@/images/LED_4.png"
                           ></v-img>
                           <v-img
-                            v-else-if="section2.led === '5'"
+                            v-else-if="section2.led === '-'"
                             contain
                             max-width="62px"
-                            src="@/images/LED_on.png"
+                            src="@/images/LED_-.png"
                           ></v-img>
-                          <v-img v-else contain max-width="62px" src="@/images/LED_on.png"></v-img>
+                          <v-img v-else contain max-width="62px" src="@/images/LED_off.png"></v-img>
                         </v-row>
                       </v-col>
                       <v-col cols="4" class="mx-auto">
-                        <v-row>Shelf: {{section2.refill_shelf}}</v-row>
+                        <v-row>Refill Shelf</v-row>
                         <v-row>
-                          <v-img
-                            v-if="section2.refill_shelf === 'False'"
-                            contain
-                            max-width="62px"
-                            src="@/images/fullshelf.png"
-                          ></v-img>
-                          <div v-else class="emptyshelf">
-                            <v-img
-                              style="vertical-align: middle; display: inline-block; margin-right: 10px;"
-                              contain
-                              max-width="62px"
-                              src="@/images/emptyshelf.png"
-                            ></v-img>
-                            <v-icon name="bell" scale="2"></v-icon>
+                          <div v-if="section2.refill_shelf === 'True'">
+                            <v-icon class="notificationicon" name="bell" scale="2"></v-icon>
+                          </div>
+                          <div v-else>
+                            <v-icon class="inactive" name="bell" scale="2"></v-icon>
                           </div>
                         </v-row>
                       </v-col>
@@ -349,7 +329,7 @@ export default {
         temperature: 20,
         humidity: 40,
         ventilator: "False",
-        gate: "False"
+        gate: "0"
       },
       section1: {
         shelf: 5,
@@ -359,8 +339,8 @@ export default {
       },
       section2: {
         shelf: 5,
-        led: "1",
-        refill_shelf: "True",
+        led: "0",
+        refill_shelf: "False",
         gate: "False"
       }
     };
@@ -369,11 +349,11 @@ export default {
     this.$mqtt.subscribe("iot/#");
   },
   mqtt: {
-    "iot/actuators/section1/led"(data, topic) {
+    "iot/actuators/section1/gate"(data, topic) {
       console.log(String.fromCharCode.apply(null, data), topic);
       this.section1.led = String.fromCharCode.apply(null, data);
     },
-    "iot/actuators/section2/led"(data, topic) {
+    "iot/actuators/section2/gate"(data, topic) {
       console.log(String.fromCharCode.apply(null, data), topic);
       this.section2.led = String.fromCharCode.apply(null, data);
     },
@@ -392,15 +372,15 @@ export default {
     "iot/actuators/section0/gate"(data, topic) {
       console.log(String.fromCharCode.apply(null, data), topic);
       this.section0.gate = String.fromCharCode.apply(null, data);
-    },
-    "iot/actuators/section1/gate"(data, topic) {
-      console.log(String.fromCharCode.apply(null, data), topic);
-      this.section1.gate = String.fromCharCode.apply(null, data);
-    },
-    "iot/actuators/section2/gate"(data, topic) {
-      console.log(String.fromCharCode.apply(null, data), topic);
-      this.section2.gate = String.fromCharCode.apply(null, data);
     }
+    // "iot/actuators/section1/gate"(data, topic) {
+    //   console.log(String.fromCharCode.apply(null, data), topic);
+    //   this.section1.gate = String.fromCharCode.apply(null, data);
+    // },
+    // "iot/actuators/section2/gate"(data, topic) {
+    //   console.log(String.fromCharCode.apply(null, data), topic);
+    //   this.section2.gate = String.fromCharCode.apply(null, data);
+    // }
   },
   watch: {
     "section0.temperature": function() {
@@ -462,6 +442,9 @@ export default {
 .mysuc {
   color: #4caf50;
 }
+.inactive {
+  color: #666666;
+}
 .sensorlabel {
   min-width: 35px;
 }
@@ -482,5 +465,22 @@ export default {
 .myrow3 {
   overflow-y: auto;
   height: 185px;
+}
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, 0px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 0px) rotate(0deg); }
+  40% { transform: translate(1px, 0px) rotate(1deg); }
+  50% { transform: translate(-1px, 0px) rotate(-1deg); }
+  60% { transform: translate(-3px, 0px) rotate(0deg); }
+  70% { transform: translate(3px, 0px) rotate(-1deg); }
+  80% { transform: translate(-1px, 0px) rotate(1deg); }
+  90% { transform: translate(1px, 0px) rotate(0deg); }
+  100% { transform: translate(1px, 0px) rotate(-1deg); }
+}
+.notificationicon {
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
 }
 </style>
