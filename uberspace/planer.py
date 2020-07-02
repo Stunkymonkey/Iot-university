@@ -68,11 +68,7 @@ def on_message(client, userdata, msg):
     # get all values from database
     temperature = database.get("sensor", "iot/sensors/section0/temperature")
     humidity = database.get("sensor", "iot/sensors/section0/humidity")
-    if int(temperature) > 27:
-        HI = heat_index.calculate(float(temperature), float(humidity))
-    else:
-        HI = 0.0
-    # print(HI)
+    HI = heat_index.calculate(float(temperature), float(humidity))
     pers_s0 = float(database.get("sensor", person_counter_0))
     pers_s1 = float(database.get("sensor", person_counter_1))
     pers_s2 = float(database.get("sensor", person_counter_2))
@@ -80,7 +76,7 @@ def on_message(client, userdata, msg):
     shelf_s2 = float(database.get("sensor", "iot/sensors/section2/shelf"))
 
     # save all value to file
-    export.to_problem_file(HI, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2)
+    export.to_problem_file(temperature, HI, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2)
 
     # run ff
     plan = subprocess.run(["./ff", "-o", "domain_supermarket.pddl", "-f",

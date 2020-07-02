@@ -18,6 +18,7 @@ problem_template = Template("""
     (= (person-count section1) {{ pers_s1 }})
     (= (person-count section2) {{ pers_s2 }})
 
+    (= (temperature section0) {{ temperature }})
     (= (heatindex section0) {{ heat_index }})
 
     (= (shelf-items section1) {{ shelf_s1 }})
@@ -35,8 +36,9 @@ problem_template = Template("""
 """)
 
 
-def to_problem_file(heat_index, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2):
-    output = problem_template.render(heat_index=heat_index, pers_s0=pers_s0, pers_s1=pers_s1,
-                                     pers_s2=pers_s2, shelf_s1=shelf_s1, shelf_s2=shelf_s2)
+def to_problem_file(temperature, heat_index, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2):
+    output = problem_template.render(temperature=temperature, heat_index=heat_index,
+                                     pers_s0=pers_s0, pers_s1=pers_s1, pers_s2=pers_s2,
+                                     shelf_s1=shelf_s1, shelf_s2=shelf_s2)
     with open("problem_supermarket_generated.pddl", "w") as text_file:
         text_file.write(output)
