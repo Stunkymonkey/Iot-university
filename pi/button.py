@@ -9,15 +9,15 @@ import states
 import mqttPublish
 import time
 
-gpio_in_list = [16, 20, 21]
-gpio_out_list = [13, 19, 26]
- 
+gpio_in_list = [38, 37, 33]
+gpio_out_list = [40, 35, 31]
+
 def getGPIO(section):
     if (property == "in"):
         return gpio_in_list[section]
     elif (property == "out"):
         return gpio_out_list[section]
- 
+
 
 if (len(sys.argv) != 3):
     BUTTON_GPIO = 16
@@ -42,7 +42,7 @@ def button_action(channel):
 
 if __name__ == "__main__":
     print('button started', section, property)
-    GPIO.setmode(GPIO.BCM)
+    GPIO.setmode(GPIO.BOARD)
     GPIO.setup(BUTTON_GPIO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
     try:

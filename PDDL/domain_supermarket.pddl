@@ -10,8 +10,7 @@
 
     (:types
         section - location
-        ventilator led - object
-        led-red led-green - led
+        ventilator - object
     )
 
 
@@ -23,42 +22,30 @@
     
     (:functions 
         (person-count ?s - section)
+        (temperature ?s - section)
         (heatindex ?s - section)
         (shelf-items ?s - section)
     )
     
-    ; if ventilator is off and heatindex too high and lots of people in section
-    ; --> turn on ventilator
+    
     (:action ventilator-on
         :parameters (?v - ventilator ?s - section)
-        :precondition (and 
-            (is-off ?v) 
-            (> (person-count ?s) 0.0)
+        :precondition (and
+            (is-off ?v)
+            (is-in ?v ?s)
+            (> (temperature ?s) 25.0)
+            (> (heatindex ?s) 27.0)
+            (exists (?s1 - section) (> (person-count ?s1) 0.0))
         )
-        :effect (and 
-            (is-on ?v) 
-            (assign (heatindex ?s) 28.0)
-        )
-    )
-    
-    ; if ventilator is on and heatindex is low and only a few people in section
-    ; --> turn ventilator off
-    (:action ventilator-off
-        :parameters (?v - ventilator ?s - section)
-        :precondition (and   
-            (is-on ?v) 
-            (< (person-count ?s) 5.0)
-        )
-        :effect (and 
-            (is-off ?v) 
-            (assign (heatindex ?s) 28.0)
+        :effect (and
+            (is-on ?v)
+            (assign (heatindex ?s) 0.0)
         )
     )
-    
-    ; if not too many people in section and shelf is empty refill it 
+
     (:action refill-shelf
         :parameters (?s - section)
-        :precondition (and 
+        :precondition (and
             (= (shelf-items ?s) 0.0) 
             (< (person-count ?s) 3.0)
         )
@@ -67,35 +54,23 @@
         )
     )
 
-    ; change led light to red --> do not enter
-    (:action led-red-on
-        :parameters (?s - section ?lg - led-green ?lr - led-red)
-        :precondition (and 
-            (is-in ?lr ?s) 
-            (is-in ?lg ?s) 
-            (is-off ?lr)
+    (:action section-closed
+        :parameters (?s - section)
+        :precondition (or 
             (> (person-count ?s) 4.0)
-        )
-        :effect (and 
-            (is-on ?lr) 
-            (is-off ?lg)
-            (decrease (person-count ?s) 1) 
-        )
-    )
-
-    ; led should be green --> possible to enter section 
-    (:action led-green-on
-        :parameters (?s - section ?lg - led-green ?lr - led-red)
-        :precondition (and
-            (is-in ?lg ?s)
-            (is-in ?lr ?s)
-            (is-off ?lg)
-            (< (person-count ?s) 5.0)
-        )
-        :effect (and 
-            (is-on ?lg)
-            (is-off ?lr)
-            (increase (person-count ?s) 1)
+            (and 
+                (> (person-count ?s) 2.0)
+                (= (shelf-items ?s) 0.0)
+            ) 
+            (forall (?s1 - section) (> (person-count ?s1) 4.0))
+            (and 
+                (> (temperature ?s) 25.0)
+                (> (heatindex ?s) 31.0)
+            )
+         )
+        :effect (and
+            (assign (person-count ?s) 1.0)
+            (assign (heatindex ?s) 0.0)
         )
     )
 )

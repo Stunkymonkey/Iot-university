@@ -22,7 +22,14 @@ def on_connect(client, userdata, flags, rc):
 def calculate_items_in_shelf(payload):
     # the minimal distance for the sensor is 2cm
     # returns the amount of items
-    return int((float(payload) - 2) / 3)
+    # from 3 to 16 cm with 4 items
+    absoulte_zero = float(payload) - 3
+    percentage = absoulte_zero / 16
+    items = 4.0 - (percentage * 4)
+    if items < 0:
+        return 0
+    else:
+        return int(items)
 
 
 def save_states(topic, payload):
@@ -61,14 +68,15 @@ def on_message(client, userdata, msg):
     # get all values from database
     temperature = database.get("sensor", "iot/sensors/section0/temperature")
     humidity = database.get("sensor", "iot/sensors/section0/humidity")
-    HI = heat_index.calculate(temperature, humidity)
-    pers_s1 = database.get("sensor", person_counter_1)
-    pers_s2 = database.get("sensor", person_counter_2)
-    shelf_s1 = database.get("sensor", "iot/sensors/section1/shelf")
-    shelf_s2 = database.get("sensor", "iot/sensors/section2/shelf")
+    HI = heat_index.calculate(float(temperature), float(humidity))
+    pers_s0 = float(database.get("sensor", person_counter_0))
+    pers_s1 = float(database.get("sensor", person_counter_1))
+    pers_s2 = float(database.get("sensor", person_counter_2))
+    shelf_s1 = float(database.get("sensor", "iot/sensors/section1/shelf"))
+    shelf_s2 = float(database.get("sensor", "iot/sensors/section2/shelf"))
 
     # save all value to file
-    export.to_problem_file(HI, pers_s1, pers_s2, shelf_s1, shelf_s2)
+    export.to_problem_file(temperature, HI, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2)
 
     # run ff
     plan = subprocess.run(["./ff", "-o", "domain_supermarket.pddl", "-f",
@@ -79,10 +87,22 @@ def on_message(client, userdata, msg):
     print(new_states)
 
     for (topic, new) in new_states.items():
+        # get value for matrix leds
+        if topic.startswith("iot/actuators/section") and topic.endswith("/gate"):
+            section_id = topic.replace("iot/actuators/section", "").replace("/gate", "")
+            value = database.get("sensor", "iot/sensors/section" + section_id + "/counter")
+            if new:
+                value = "-"
+            new = value
+
         # check what should get updated with database
         old = database.get("actuator", topic)
+        # make sure both datatypes are the same
+        old = str(old)
+        new = str(new)
+
         if new != old:
-            database.upsert("actuator", topic, int(new))
+            database.upsert("actuator", topic, new)
             mqtt_publish.sendValue(new, topic)
 
 

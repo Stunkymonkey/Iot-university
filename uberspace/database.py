@@ -4,12 +4,12 @@ conn = sqlite3.connect('IoT.db')
 
 c = conn.cursor()
 c.execute('''CREATE TABLE IF NOT EXISTS sensor (key TEXT PRIMARY KEY, value INT DEFAULT 0)''')
-c.execute('''CREATE TABLE IF NOT EXISTS actuator (key TEXT PRIMARY KEY, value BOOLEAN DEFAULT 0)''')
+c.execute('''CREATE TABLE IF NOT EXISTS actuator (key TEXT PRIMARY KEY, value TEXT DEFAULT "False")''')
 conn.commit()
 
 
 def upsert(table, key, value):
-    c.execute("INSERT INTO " + table + "(key, value) VALUES('" + key + "', " + str(value) + ") ON CONFLICT(key) DO UPDATE SET value=" + str(value) + ";")
+    c.execute("INSERT INTO " + table + "(key, value) VALUES('" + key + "', '" + str(value) + "') ON CONFLICT(key) DO UPDATE SET value='" + str(value) + "';")
     conn.commit()
 
 

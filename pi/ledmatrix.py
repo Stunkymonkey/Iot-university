@@ -9,49 +9,40 @@ from PIL import ImageFont
 from luma.core.legacy.font import proportional, LCD_FONT
 from luma.core.legacy import text
 import paho.mqtt.client as mqtt
-import states
+
+states = ["0", "0"]
 
 serial = spi(port=0, device=0, gpio=noop())
-device = max7219(serial, width=16, height=8)
+device = max7219(serial, width=16, height=8, block_orientation=-90)
 
-#with canvas(device) as draw:
-   # draw.rectangle(device.bounding_box, outline="white", fill="black")
-#    text(draw, (2,1), "0", fill="white", font=proportional(LCD_FONT))
-#    text(draw, (10,1), "0", fill="white", font=proportional(LCD_FONT))
+with canvas(device) as draw:
+    text(draw, (2,1), "0", fill="white", font=proportional(LCD_FONT))
+    text(draw, (10,1), "0", fill="white", font=proportional(LCD_FONT))
 
-topic1 = "iot/actuators/section1/led"
-topic2 = "iot/actuators/section2/led"
+topic1 = "iot/actuators/section1/gate"
+topic2 = "iot/actuators/section2/gate"
 
-def on_connect(client, userdata, flags, rc):  # The callback for when the client connects to the broker
-    print("Connected with result code {0}".format(str(rc)))  # Print result of connection attempt
-    client.subscribe([(topic1,0), (topic2,0)])  # Subscribe to the topic “digitest/test1”, receive any messages published on it
+def on_connect(client, userdata, flags, rc):
+    print("connected with result code {0}".format(str(rc)))
+    client.subscribe([(topic1,0), (topic2,0)])
 
 def on_message(client, userdata, msg):
-    isSet = True
-    print("Message received-> " + msg.topic + " " + str(msg.payload))  # Print a received msg
+    isset = true
+    print("message received-> " + msg.topic + " " + str(msg.payload))
 
 def on_message_n1(client, userdata, msg):
     msg.payload = msg.payload.decode("utf-8")
-    tmp = msg.payload
-    print(type(tmp))
-    tmp = int(tmp)
-    print(type(tmp))
-    states.setCount(0, tmp)    
-    with canvas(device) as draw:
-        text(draw, (2,1), str(states.getCount(0)), fill="white", font=proportional(LCD_FONT))
-        text(draw, (10,1), str(states.getCount(1)), fill="white", font=proportional(LCD_FONT))
-def on_message_n2(client, userdata, msg):  # The callback for when a PUBLISH message is received from the server.
+    states[0] = msg.payload
+    draw()
+def on_message_n2(client, userdata, msg):
     msg.payload = msg.payload.decode("utf-8")
-    tmp = msg.payload
-    print(type(tmp))
-    tmp = int(tmp)
-    print(type(tmp))
-    states.setCount(1, tmp)
+    states[1] = msg.payload
+    draw()
+
+def draw():
     with canvas(device) as draw:
-        text(draw, (2,1), str(states.getCount(0)), fill="white", font=proportional(LCD_FONT))
-        text(draw, (10,1), str(states.getCount(1)), fill="white", font=proportional(LCD_FONT))
-
-
+        text(draw, (10,1), str(states[0]), fill="white", font=proportional(LCD_FONT))
+        text(draw, (2,1), str(states[1]), fill="white", font=proportional(LCD_FONT))
 
 
 client = mqtt.Client()
@@ -64,5 +55,4 @@ client.connect("boethin.uberspace.de", 46980, 60)
 client.loop_forever()
 
 # virtual = viewport(device, width=200, height=100)
-
 
