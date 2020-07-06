@@ -5,7 +5,6 @@
 import signal
 import sys
 import RPi.GPIO as GPIO
-import states
 import mqttPublish
 import time
 
