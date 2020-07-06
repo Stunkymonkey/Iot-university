@@ -17,8 +17,8 @@ while True:
     humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PIN)
     if humidity is not None and temperature is not None:
         print("Temp={0:0.1f}C Humidity={1:0.1f}%".format(temperature, humidity))
-        client.publish("iot/temperature", temperature)
-        client.publish("iot/humidity", humidity)
+        client.publish("iot/sensors/section0/temperature", temperature)
+        client.publish("iot/sensors/section0/humidity", humidity)
     else:
         print("Sensor failure. Check wiring.");
     time.sleep(3);
