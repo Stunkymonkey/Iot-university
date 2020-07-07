@@ -26,7 +26,7 @@ problem_template = Template("""
 
     (= (shelf-items section1) {{ shelf_s1 }})
     (= (shelf-items section2) {{ shelf_s2 }})
-    (= (shelf-items supermarket1) {{ shelf_sum }}
+    (= (shelf-items supermarket1) {{ shelf_sum }})
 )
 
 (:goal
