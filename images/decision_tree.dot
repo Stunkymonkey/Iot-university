@@ -1,5 +1,5 @@
 digraph G {
-    graph [label="PDDL", splines=ortho]
+    graph [label="PDDL", ortho=yes, splines=ortho]
     node [shape=box]
     rankdir=LR;
     compound=true;
@@ -7,60 +7,108 @@ digraph G {
     /* Sensors */
     temp    [label="Temperature", shape="square", style=filled, color=lightblue, fixedsize=true, width=2]
     humid   [label="Humidity", shape="square", style=filled, color=lightblue, fixedsize=true, width=2]
-    pcount  [label="Person counter section n", shape="square", style=filled, color=lightblue, fixedsize=true, width=2]
+    mcount [label="Persons inside building", shape="square", style=filled, color=lightblue, fixedsize=true, width=2]
+    pcount  [label="Persons in section n", shape="square", style=filled, color=lightblue, fixedsize=true, width=2]
     shelf   [label="Shelf in section n", shape="square", style=filled, color=lightblue, fixedsize=true, width=2]
-        index   [label="Heatindex", shape="oval", style=filled, color=lightblue]
+    index   [label="Heatindex", shape="square", style=filled, color=lightblue]
     /* Actuators */
     gateO   [label="Gate outside", shape="square", style=filled, color=orange, fixedsize=true, width=2]
     gateI   [label="Section gate n", shape="square", style=filled, color=orange, fixedsize=true, width=2]
     vent    [label="Ventilator", shape="square", style=filled, color=orange, fixedsize=true, width=2]
-    bot     [label="Telegram Bot", shape="square", style=filled, color=orange, fixedsize=true, width=2]/* Relationships */
+    bot     [label="Shelf refill notification", shape="square", style=filled, color=orange, fixedsize=true, width=2]/* Relationships */
 
     /* Logic operators */
-    and1    [label= "&", shape="diamond", color="black", style=filled, color=grey, fixedsize=true, width=1]
-    and2    [label= "&", shape="diamond", color="black", style=filled, color=grey, fixedsize=true, width=1]
-    and3    [label= "&", shape="diamond", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    andTempIndex27    [label= "&", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    andTempIndex32    [label= "&", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    andShelfPcount    [label= "&", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
     
-    or1     [label= "OR", shape="diamond", color="black", style=filled, color=grey, fixedsize=true, width=1]
-    or2     [label= "OR", shape="diamond", color="black", style=filled, color=grey, fixedsize=true, width=1]
-
-    sum     [label= "SUM", shape="diamond", color="black", style=filled, color=grey, fixedsize=true, width=1]
-
-    b1      [label= ">27", shape="diamond", color="black", style=filled, color=grey, fixedsize=true, width=1]
-    b2      [label= ">0", shape="diamond", color="black", style=filled, color=grey, fixedsize=true, width=1]
-    b3      [label= ">20", shape="diamond", color="black", style=filled, color=grey, fixedsize=true, width=1]
-    b4      [label= ">7", shape="diamond", color="black", style=filled, color=grey, fixedsize=true, width=1]
-    s1      [label= "<=32", shape="diamond", color="black", style=filled, color=grey, fixedsize=true, width=1]
-    s2      [label= "<=0", shape="diamond", color="black", style=filled, color=grey, fixedsize=true, width=1]
-    is      [label= "isEmpty", shape="diamond", color="black", style=filled, color=grey, fixedsize=true, width=1]
     
-    temp -> {index} [splines=ortho]
+    // and3    [label= "&", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    
+    orGateO     [label= "OR", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    orGateI     [label= "OR", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    orVent     [label= "OR", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+
+    // sum     [label= "SUM", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    
+    biggerTemp25      [label= ">25", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    biggerIndex32      [label= ">32", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    biggerIndex27      [label= ">27", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    biggerMcount7      [label= ">7", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    biggerMcount10      [label= ">10", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    isEmpty           [label= "isEmpty", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    allEmpty           [label= "allEmpty", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    
+    biggerPcount4      [label= ">4", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+    biggerPcount2      [label= ">2", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
+   
+
+    #Temperature + Humidity = Heatindex -> ventilator & gate outside
+    temp -> index
     humid -> index
-    index -> b1
-    b1 -> and1
-    pcount -> b2
-    b2 -> and1
-    and1 -> vent
-    index -> s1
-    pcount -> b4
-    shelf -> is
-    pcount -> sum
-    sum -> b3
-    s1 -> or1
-    b3 -> or1
-    or1 -> gateO
-    pcount -> s2
-    b4 -> or2
-    is -> or2
-    or2 -> gateI
-    s2 -> and2
-    is -> and2
-    and2 -> bot
-    is -> and3
-    and3 -> gateO
+    temp -> biggerTemp25 
+    index -> biggerIndex32
+    index -> biggerIndex27
+    biggerTemp25 -> andTempIndex32
+    biggerIndex32 -> andTempIndex32
+    biggerTemp25 -> andTempIndex27
+    biggerIndex27 -> andTempIndex27
+    andTempIndex32 -> orGateO
+    andTempIndex27 -> orVent
+
+    # Mainhall
+    mcount -> biggerMcount7
+    biggerMcount7 -> orVent
+    mcount -> biggerMcount10
+    biggerMcount10 -> orGateO
+
+    #Sections
+    shelf -> isEmpty 
+    isEmpty -> bot
+    pcount -> biggerPcount4
+    biggerPcount4 -> orGateI
+    pcount -> biggerPcount2
+    biggerPcount2 -> andShelfPcount
+    isEmpty -> andShelfPcount
+    andShelfPcount -> orGateI
+
+    shelf -> allEmpty
+    allEmpty -> orGateO
+
+    orGateO -> gateO
+    orGateI -> gateI
+    orVent -> vent
+
+
+    // temp -> b0
+    // humid -> index
+    // index -> b1
+    // b1 -> and1
+    // // b0 -> and1
+    // and1 -> vent
+    // index -> s1
+    // b0 -> s1
+    // pcount -> b4
+    // mcount -> bMainhall
+    // bMainhall -> vent
+    // shelf -> is
+    // // pcount -> sum
+    // // sum -> b3
+    // s1 -> or1
+    // b3 -> or1
+    // or1 -> gateO
+    // pcount -> s2
+    // b4 -> or2
+    // is -> or2
+    // or2 -> gateI
+    // s2 -> and2
+    // is -> and2
+    // and2 -> bot
+    // is -> and3
+    // and3 -> gateO
 
     
     /* Ranks */
-    { rank=min; temp, humid, pcount, shelf; }
+    { rank=min; temp, humid, mcount, pcount, shelf; }
     { rank=max; gateO, gateI, vent, bot; }
 }
