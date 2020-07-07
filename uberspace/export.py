@@ -4,22 +4,24 @@ problem_template = Template("""
 (define (problem supermarket_problem) (:domain domain_supermarket)
 
 (:objects
-    section0 section1 section2 - section
+    section1 section2 - section
+    main-hall1 - main-hall
     ventilator1 - ventilator
 )
 
 ; init everything thats true, otherwise it is false by default
 (:init
 
-    (is-in ventilator1 section0)
+    (is-in ventilator1 main-hall1)
     (is-off ventilator1)
 
-    (= (person-count section0) {{ pers_s0 }})
+    (= (person-count main-hall1) {{ pers_s0 }})
     (= (person-count section1) {{ pers_s1 }})
     (= (person-count section2) {{ pers_s2 }})
 
-    (= (temperature section0) {{ temperature }})
-    (= (heatindex section0) {{ heat_index }})
+    (= (temperature main-hall1) {{ temperature }})
+    (= (heatindex main-hall1) {{ heat_index }})
+    (= (is-safe main-hall1) 0.0)
 
     (= (shelf-items section1) {{ shelf_s1 }})
     (= (shelf-items section2) {{ shelf_s2 }})
@@ -27,9 +29,12 @@ problem_template = Template("""
 
 (:goal
     (and
-        (< (heatindex section0) 27.0)
+        (< (heatindex main-hall1) 27.0)
         (> (shelf-items section1) 0.0) (> (shelf-items section2) 0.0)
-        (< (person-count section0) 5.0) (< (person-count section1) 5.0) (< (person-count section2) 5.0)
+        (< (person-count main-hall1) 10.0)
+        (< (person-count section1) 5.0) (< (person-count section2) 5.0)
+        (< (temperature main-hall1) 30.0)
+        (= (is-safe main-hall1) 1.0)
     )
 )
 )
