@@ -15,23 +15,17 @@ digraph G {
     gateO   [label="Gate outside", shape="square", style=filled, color=orange, fixedsize=true, width=2]
     gateI   [label="Section gate n", shape="square", style=filled, color=orange, fixedsize=true, width=2]
     vent    [label="Ventilator", shape="square", style=filled, color=orange, fixedsize=true, width=2]
-    bot     [label="Shelf refill notification", shape="square", style=filled, color=orange, fixedsize=true, width=2]/* Relationships */
+    bot     [label="Shelf refill notification", shape="square", style=filled, color=orange, fixedsize=true, width=2]
+
+    /* Relationships */
 
     /* Logic operators */
-    andTempIndex27    [label= "&", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
-    andTempIndex32    [label= "&", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
     andShelfPcount    [label= "&", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
-    
-    
-    // and3    [label= "&", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
     
     orGateO     [label= "OR", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
     orGateI     [label= "OR", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
     orVent     [label= "OR", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
 
-    // sum     [label= "SUM", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
-    
-    biggerTemp25      [label= ">25", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
     biggerIndex32      [label= ">32", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
     biggerIndex27      [label= ">27", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
     biggerMcount7      [label= ">7", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
@@ -41,20 +35,14 @@ digraph G {
     
     biggerPcount4      [label= ">4", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
     biggerPcount2      [label= ">2", shape="oval", color="black", style=filled, color=grey, fixedsize=true, width=1]
-   
 
     #Temperature + Humidity = Heatindex -> ventilator & gate outside
     temp -> index
     humid -> index
-    temp -> biggerTemp25 
     index -> biggerIndex32
     index -> biggerIndex27
-    biggerTemp25 -> andTempIndex32
-    biggerIndex32 -> andTempIndex32
-    biggerTemp25 -> andTempIndex27
-    biggerIndex27 -> andTempIndex27
-    andTempIndex32 -> orGateO
-    andTempIndex27 -> orVent
+    biggerIndex32 -> orGateO
+    biggerIndex27 -> orVent
 
     # Mainhall
     mcount -> biggerMcount7
@@ -78,35 +66,6 @@ digraph G {
     orGateO -> gateO
     orGateI -> gateI
     orVent -> vent
-
-
-    // temp -> b0
-    // humid -> index
-    // index -> b1
-    // b1 -> and1
-    // // b0 -> and1
-    // and1 -> vent
-    // index -> s1
-    // b0 -> s1
-    // pcount -> b4
-    // mcount -> bMainhall
-    // bMainhall -> vent
-    // shelf -> is
-    // // pcount -> sum
-    // // sum -> b3
-    // s1 -> or1
-    // b3 -> or1
-    // or1 -> gateO
-    // pcount -> s2
-    // b4 -> or2
-    // is -> or2
-    // or2 -> gateI
-    // s2 -> and2
-    // is -> and2
-    // and2 -> bot
-    // is -> and3
-    // and3 -> gateO
-
     
     /* Ranks */
     { rank=min; temp, humid, mcount, pcount, shelf; }
