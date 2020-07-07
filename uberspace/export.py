@@ -26,12 +26,13 @@ problem_template = Template("""
 
     (= (shelf-items section1) {{ shelf_s1 }})
     (= (shelf-items section2) {{ shelf_s2 }})
+    (= (shelf-items supermarket1) {{ shelf_sum }}
 )
 
 (:goal
     (and
         (< (heatindex main-hall1) 35) (< (heatindex supermarket1) 27)
-        (> (shelf-items section1) 0) (> (shelf-items section2) 0)
+        (> (shelf-items section1) 0) (> (shelf-items section2) 0) (> (shelf-items supermarket1) 0) 
         (< (person-count supermarket1) 8)
         (< (person-count main-hall1) 10)
         (< (person-count section1) 5) (< (person-count section2) 5)

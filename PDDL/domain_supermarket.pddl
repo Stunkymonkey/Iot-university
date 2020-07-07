@@ -23,7 +23,7 @@
     (:functions 
         (person-count ?l - location)
         (heatindex ?l - location)
-        (shelf-items ?s - section)
+        (shelf-items ?l - location)
     )
     
     
@@ -74,12 +74,16 @@
         :precondition (or
             (> (person-count ?m) 9)
             ;(forall (?s - section) (> (person-count ?s) 4.0))
-            (forall (?s - section) (= (shelf-items ?s) 0))
+            (forall (?s - supermarket) (= (shelf-items ?s) 0))
             (> (heatindex ?m) 32)
         )
         :effect (and
             (assign (person-count ?m) 1)
             (assign (heatindex ?m) 1)
+            (forall (?s1 - supermarket) 
+                (when (= (shelf-items ?s1) 0) (assign (shelf-items ?s1) 6))
+            )
+            
         )
     )
 )
