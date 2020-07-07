@@ -1,6 +1,6 @@
 
 def get_states(plan):
-    print(plan)
+    # print(plan)
     start_position = plan.find("step")
     # end_position = plan.find("\n     \n\ntime spent:")
     end_position = plan.find("\ntime spent:")
