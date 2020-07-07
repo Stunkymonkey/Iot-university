@@ -68,16 +68,17 @@ def on_message(client, userdata, msg):
     # get all values from database
     temperature = database.get("sensor", "iot/sensors/section0/temperature")
     humidity = database.get("sensor", "iot/sensors/section0/humidity")
-    HI = heat_index.calculate(float(temperature), float(humidity))
+    HI = 0.0
+    # heatindex makes only sense if temperature is over 25
+    if temperature > 25:
+        HI = heat_index.calculate(float(temperature), float(humidity))
     pers_s0 = float(database.get("sensor", person_counter_0))
     pers_s1 = float(database.get("sensor", person_counter_1))
     pers_s2 = float(database.get("sensor", person_counter_2))
     shelf_s1 = float(database.get("sensor", "iot/sensors/section1/shelf"))
     shelf_s2 = float(database.get("sensor", "iot/sensors/section2/shelf"))
 
-    # heatindex makes only sense if temperature is over 25
-    if temperature < 25.0:
-        HI = 0.0
+    print(HI)
 
     # save all value to file
     export.to_problem_file(HI, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2)
