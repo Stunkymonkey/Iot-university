@@ -29,12 +29,11 @@ problem_template = Template("""
 
 (:goal
     (and
-        (< (heatindex main-hall1) 27.0)
-        (> (shelf-items section1) 0.0) (> (shelf-items section2) 0.0)
-        (< (person-count main-hall1) 10.0)
-        (< (person-count section1) 5.0) (< (person-count section2) 5.0)
-        (< (temperature main-hall1) 30.0)
-        (= (is-safe main-hall1) 1.0)
+        (< (heatindex main-hall1) 27)
+        (> (shelf-items section1) 0) (> (shelf-items section2) 0)
+        (< (person-count main-hall1) 10)
+        (< (person-count section1) 5) (< (person-count section2) 5)
+        (is-safe main-hall1)
     )
 )
 )

@@ -18,6 +18,7 @@
         (is-in ?o - object ?l - location)
         (is-on ?o - object)
         (is-off ?o - object)
+        (is-safe ?l - location)
     )
     
     (:functions 
@@ -25,7 +26,6 @@
         (temperature ?s - main-hall)
         (heatindex ?s - main-hall)
         (shelf-items ?s - section)
-        (is-safe ?l - location)
     )
     
     
@@ -36,60 +36,70 @@
             (is-in ?v ?m)
             (or
                 (and
-                    (> (temperature ?m) 25.0)
-                    (> (heatindex ?m) 27.0)
+                    (> (temperature ?m) 25)
+                    (> (heatindex ?m) 27)
                 )
-                (exists (?s1 - section) (> (person-count ?s1) 3.0))
+                (> (person-count ?m) 7)
             )
         )
         :effect (and
             (is-on ?v)
-            (assign (heatindex ?m) 0.0)
-            
+            (when 
+                (and 
+                    (< (person-count ?m) 10) 
+                    (> (person-count ?m) 7)
+                    (> (heatindex ?m) 27)
+                    (< (heatindex ?m) 33)
+                )
+                (and 
+                    ;(assign (temperature ?m) 1.0)
+                    (assign (heatindex ?m) 1)
+                )
+            )
+            (is-safe ?m)
         )
     )
 
     (:action refill-shelf
         :parameters (?s - section)
         :precondition (and
-            (= (shelf-items ?s) 0.0) 
-            (< (person-count ?s) 3.0)
+            (= (shelf-items ?s) 0) 
+            (< (person-count ?s) 3)
         )
         :effect (and 
-            (assign (shelf-items ?s) 6.0)
+            (assign (shelf-items ?s) 6)
         )
     )
 
     (:action section-closed
         :parameters (?s - section)
         :precondition (or
-            (> (person-count ?s) 4.0)
+            (> (person-count ?s) 4)
             (and
-                (> (person-count ?s) 2.0)
-                (= (shelf-items ?s) 0.0)
+                (> (person-count ?s) 2)
+                (= (shelf-items ?s) 0)
             )
          )
         :effect (and
-            (assign (person-count ?s) 1.0)
+            (assign (person-count ?s) 1)
         )
     )
 
     (:action gate-closed
         :parameters (?m - main-hall)
         :precondition (or
-            (> (person-count ?m) 9.0)
-            (forall (?s - section) (> (person-count ?s) 4.0))
-            (forall (?s - section) (= (shelf-items ?s) 0.0))
+            (> (person-count ?m) 10)
+            ;(forall (?s - section) (> (person-count ?s) 4.0))
+            (forall (?s - section) (= (shelf-items ?s) 0))
             (and
-                (> (temperature ?m) 25.0)
-                (> (heatindex ?m) 31.0)
+                (> (temperature ?m) 25)
+                (> (heatindex ?m) 32)
             )
         )
         :effect (and
-            (assign (person-count ?m) 1.0)
-            (assign (temperature ?m) 1.0)
-            (assign (is-safe ?m) 1.0)
+            (assign (person-count ?m) 1)
+            (assign (heatindex ?m) 1)         
+            
         )
     )
 )
-
