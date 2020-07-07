@@ -1,0 +1,42 @@
+{
+	"iot": {
+		"sensor": {
+			"section0":{
+				"temperature": 27.0,
+				"humdity": 40.0,
+				"button": {
+					"in": 0,
+					"out": 0
+				}
+			},
+			"section1":{
+				"shelf": 3.5,
+				"button": {
+					"in": 0,
+					"out": 0
+				}
+			},
+			"section2":{
+				"shelf": 16.1,
+				"button": {
+					"in": 0,
+					"out": 0
+				}
+			}
+		},
+		"actuators":{
+			"section0":{
+				"gate": "False",
+				"ventilator": "True"
+			},
+			"section1":{
+				"gate": "False",
+				"refill_shelf": "False"
+			},
+			"section2":{
+				"gate": "True",
+				"refill_shelf": "True"
+			}
+		}
+	}
+}
