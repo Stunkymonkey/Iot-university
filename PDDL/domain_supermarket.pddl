@@ -98,8 +98,7 @@
         )
         :effect (and
             (assign (person-count ?m) 1)
-            (assign (heatindex ?m) 1)         
-            
+            (assign (heatindex ?m) 1)
         )
     )
 )

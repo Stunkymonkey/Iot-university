@@ -21,7 +21,6 @@ problem_template = Template("""
 
     (= (temperature main-hall1) {{ temperature }})
     (= (heatindex main-hall1) {{ heat_index }})
-    (= (is-safe main-hall1) 0.0)
 
     (= (shelf-items section1) {{ shelf_s1 }})
     (= (shelf-items section2) {{ shelf_s2 }})
