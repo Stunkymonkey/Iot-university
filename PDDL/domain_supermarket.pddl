@@ -9,7 +9,7 @@
     )
 
     (:types
-        main-hall section - location
+        main-hall supermarket section - location
         ventilator - object
     )
 
@@ -22,40 +22,29 @@
     
     (:functions 
         (person-count ?l - location)
-        (temperature ?s - main-hall)
-        (heatindex ?s - main-hall)
+        (temperature ?l - location)
+        (heatindex ?l - location)
         (shelf-items ?s - section)
     )
     
     
     (:action ventilator-on
-        :parameters (?v - ventilator ?m - main-hall)
+        :parameters (?v - ventilator ?s - supermarket)
         :precondition (and
             (is-off ?v)
-            (is-in ?v ?m)
+            (is-in ?v ?s)
             (or
                 (and
-                    (> (temperature ?m) 25)
-                    (> (heatindex ?m) 27)
+                    (> (temperature ?s) 25)
+                    (> (heatindex ?s) 27)
                 )
-                (> (person-count ?m) 7)
+                (> (person-count ?s) 7)
             )
         )
         :effect (and
             (is-on ?v)
-            (when 
-                (and 
-                    (< (person-count ?m) 11) 
-                    (> (person-count ?m) 7)
-                    (> (heatindex ?m) 27)
-                    (< (heatindex ?m) 33)
-                )
-                (and 
-                    ;(assign (temperature ?m) 1.0)
-                    (assign (heatindex ?m) 1)
-                )
-            )
-            (assign (person-count ?m) 1.0)
+            (assign (heatindex ?s) 1)
+            (assign (person-count ?s) 1)
         )
     )
 
