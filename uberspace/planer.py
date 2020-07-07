@@ -81,7 +81,7 @@ def on_message(client, userdata, msg):
     print(HI)
 
     # save all value to file
-    export.to_problem_file(HI, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2)
+    export.to_problem_file(HI, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2, shelf_s1 + shelf_s2)
 
     # run ff
     plan = subprocess.run(["./ff", "-o", "domain_supermarket.pddl", "-f",

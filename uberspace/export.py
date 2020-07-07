@@ -41,9 +41,9 @@ problem_template = Template("""
 """)
 
 
-def to_problem_file(heat_index, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2):
+def to_problem_file(heat_index, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2, shelf_sum):
     output = problem_template.render(heat_index=heat_index,
                                      pers_s0=pers_s0, pers_s1=pers_s1, pers_s2=pers_s2,
-                                     shelf_s1=shelf_s1, shelf_s2=shelf_s2)
+                                     shelf_s1=shelf_s1, shelf_s2=shelf_s2, shelf_sum=shelf_sum)
     with open("problem_supermarket_generated.pddl", "w") as text_file:
         text_file.write(output)
