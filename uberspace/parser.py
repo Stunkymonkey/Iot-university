@@ -29,7 +29,7 @@ def get_states(plan):
         # mapping of steps to states
         result = dict()
         # if one ventilator is on turn on the ventilator
-        result["iot/actuators/section0/ventilator"] = "VENTILATOR-ON VENTILATOR1 MAIN-HALL1" in present_values
+        result["iot/actuators/section0/ventilator"] = "VENTILATOR-ON VENTILATOR1 SUPERMARKET1" in present_values
         result["iot/actuators/section1/refill_shelf"] = "REFILL-SHELF SECTION1" in present_values
         result["iot/actuators/section2/refill_shelf"] = "REFILL-SHELF SECTION2" in present_values
         result["iot/actuators/section0/gate"] = "GATE-CLOSED MAIN-HALL1" in present_values
