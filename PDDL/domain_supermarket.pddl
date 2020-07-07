@@ -22,7 +22,6 @@
     
     (:functions 
         (person-count ?l - location)
-        (temperature ?l - location)
         (heatindex ?l - location)
         (shelf-items ?s - section)
     )
@@ -34,10 +33,7 @@
             (is-off ?v)
             (is-in ?v ?s)
             (or
-                (and
-                    (> (temperature ?s) 25)
-                    (> (heatindex ?s) 27)
-                )
+                (> (heatindex ?s) 27)
                 (> (person-count ?s) 7)
             )
         )
@@ -79,10 +75,7 @@
             (> (person-count ?m) 9)
             ;(forall (?s - section) (> (person-count ?s) 4.0))
             (forall (?s - section) (= (shelf-items ?s) 0))
-            (and
-                (> (temperature ?m) 25)
-                (> (heatindex ?m) 32)
-            )
+            (> (heatindex ?m) 32)
         )
         :effect (and
             (assign (person-count ?m) 1)
