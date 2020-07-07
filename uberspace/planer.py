@@ -75,8 +75,12 @@ def on_message(client, userdata, msg):
     shelf_s1 = float(database.get("sensor", "iot/sensors/section1/shelf"))
     shelf_s2 = float(database.get("sensor", "iot/sensors/section2/shelf"))
 
+    # heatindex makes only sense if temperature is over 25
+    if temperature < 25.0:
+        HI = 0.0
+
     # save all value to file
-    export.to_problem_file(temperature, HI, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2)
+    export.to_problem_file(HI, pers_s0, pers_s1, pers_s2, shelf_s1, shelf_s2)
 
     # run ff
     plan = subprocess.run(["./ff", "-o", "domain_supermarket.pddl", "-f",
