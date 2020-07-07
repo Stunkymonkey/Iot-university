@@ -13,7 +13,7 @@ problem_template = Template("""
 ; init everything thats true, otherwise it is false by default
 (:init
 
-    (is-in ventilator1 main-hall1)
+    (is-in ventilator1 supermarket)
     (is-off ventilator1)
 
     (= (person-count supermarket1) {{ pers_s0 }})
