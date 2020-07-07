@@ -18,7 +18,6 @@
         (is-in ?o - object ?l - location)
         (is-on ?o - object)
         (is-off ?o - object)
-        (is-safe ?l - location)
     )
     
     (:functions 
@@ -56,7 +55,7 @@
                     (assign (heatindex ?m) 1)
                 )
             )
-            (is-safe ?m)
+            (assign (person-count ?m) 1.0)
         )
     )
 

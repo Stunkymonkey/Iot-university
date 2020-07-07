@@ -5,7 +5,7 @@ problem_template = Template("""
 
 (:objects
     section1 section2 - section
-    main-hall1 - main-hall
+    main-hall1 main-hall2 - main-hall
     ventilator1 - ventilator
 )
 
@@ -16,6 +16,7 @@ problem_template = Template("""
     (is-off ventilator1)
 
     (= (person-count main-hall1) {{ pers_s0 }})
+    (= (person-count main-hall2) {{ pers_s0 }})
     (= (person-count section1) {{ pers_s1 }})
     (= (person-count section2) {{ pers_s2 }})
 
@@ -30,9 +31,9 @@ problem_template = Template("""
     (and
         (< (heatindex main-hall1) 27)
         (> (shelf-items section1) 0) (> (shelf-items section2) 0)
-        (< (person-count main-hall1) 10)
+        (< (person-count main-hall1) 7)
+        (< (person-count main-hall2) 10)
         (< (person-count section1) 5) (< (person-count section2) 5)
-        (is-safe main-hall1)
     )
 )
 )
