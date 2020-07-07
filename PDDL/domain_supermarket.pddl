@@ -46,7 +46,7 @@
             (is-on ?v)
             (when 
                 (and 
-                    (< (person-count ?m) 10) 
+                    (< (person-count ?m) 11) 
                     (> (person-count ?m) 7)
                     (> (heatindex ?m) 27)
                     (< (heatindex ?m) 33)
@@ -66,7 +66,7 @@
             (= (shelf-items ?s) 0) 
             (< (person-count ?s) 3)
         )
-        :effect (and 
+        :effect (and
             (assign (shelf-items ?s) 6)
         )
     )
@@ -88,7 +88,7 @@
     (:action gate-closed
         :parameters (?m - main-hall)
         :precondition (or
-            (> (person-count ?m) 10)
+            (> (person-count ?m) 9)
             ;(forall (?s - section) (> (person-count ?s) 4.0))
             (forall (?s - section) (= (shelf-items ?s) 0))
             (and
