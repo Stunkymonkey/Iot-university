@@ -32,7 +32,7 @@ problem_template = Template("""
     (and
         (< (heatindex main-hall1) 35) (< (heatindex supermarket1) 27)
         (> (shelf-items section1) 0) (> (shelf-items section2) 0)
-        (< (person-count supermarket1) 7)
+        (< (person-count supermarket1) 8)
         (< (person-count main-hall1) 10)
         (< (person-count section1) 5) (< (person-count section2) 5)
     )
